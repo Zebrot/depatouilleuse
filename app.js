@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Thing = require('./models/thing')
+const path = require('path');
 
-mongoose.connect('mongodb+srv://piterrancle:wSKpvvkDaTQ53aAf@pierreterrancleoc.htgkcxc.mongodb.net/?retryWrites=true&w=majority&appName=PierreTerrancleOC',
+mongoose.connect('connect_to_mongoDB',
     { useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-
+    
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -18,8 +20,10 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-const stuffRoute = require('./routes/stuff')
-app.use('/api/stuff', stuffRoute);
+const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
+app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes)
 
 
 module.exports = app;
