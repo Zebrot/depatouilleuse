@@ -9,7 +9,11 @@ mongoose.connect('connect_to_mongoDB',
     useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-    
+
+app;use('/', (req, res, next) => {
+    res.status(400).json('Bienvenue chez la dépatouilleuse !')
+});
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
