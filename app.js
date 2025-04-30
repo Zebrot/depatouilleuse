@@ -11,7 +11,6 @@ mongoose.connect('connect_to_mongoDB',
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use('/', (req, res, next) => {
-    console.log(process.env);
     res.status(400).json('Bienvenue chez la dépatouilleuse !');
 });
 
