@@ -6,7 +6,7 @@ const path = require('path');
 
 // Fix CORS 
 const cors = require('cors');
-const frontEndUrl = import.meta.env.VITE_API_KEY;
+const frontEndUrl = import.meta.env.VITE_FRONTEND_URL;
 app.use(cors({origin : frontEndUrl}));
 
 mongoose.connect('connect_to_mongoDB',
