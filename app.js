@@ -7,7 +7,7 @@ const path = require('path');
 // Fix CORS 
 const cors = require('cors');
 const frontEndUrl = process.env.VITE_FRONTEND_URL;
-app.use(cors({origin : frontEndUrl}));
+app.use(cors({origin : 'https://la-depatouilleuse-front.onrender.com/'}));
 
 
 mongoose.connect('connect_to_mongoDB',
