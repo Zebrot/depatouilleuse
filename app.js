@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const Thing = require('./models/thing')
 const path = require('path');
 
+// Fix CORS 
+const cors = require('cors');
+const frontEndUrl = import.meta.env.VITE_API_KEY;
+app.use(cors({origin : frontEndUrl}));
+
 mongoose.connect('connect_to_mongoDB',
     { useNewUrlParser: true,
     useUnifiedTopology: true })
