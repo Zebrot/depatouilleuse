@@ -11,7 +11,8 @@ mongoose.connect('connect_to_mongoDB',
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use('/', (req, res, next) => {
-    res.status(400).json('Bienvenue chez la dépatouilleuse !')
+    console.log(process.env.API_ADRESS);
+    res.status(400).json('Bienvenue chez la dépatouilleuse !');
 });
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
