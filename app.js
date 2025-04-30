@@ -16,8 +16,10 @@ mongoose.connect('connect_to_mongoDB',
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+app.use(express.json());
+
 app.use('/', (req, res, next) => {
-    res.status(400).json('Bienvenue chez la dépatouilleuse !');
+    res.status(200).json({message : 'Bienvenue chez la dépatouilleuse !'});
 });
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -28,7 +30,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json());
 
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
