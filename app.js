@@ -11,10 +11,7 @@ const cors = require('cors');
 const frontEndUrl = process.env.VITE_FRONTEND_URL;
 app.use(cors({origin : ['https://la-depatouilleuse-front.onrender.com', frontEndUrl]})); 
 
-
-mongoose.connect(process.env.DB_CONNECT,
-    { useNewUrlParser: true,
-    useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONNECT)
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
