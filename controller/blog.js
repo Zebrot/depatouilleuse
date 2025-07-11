@@ -1,4 +1,3 @@
-const Thing = require ('../models/blog');
 const Blog = require('../models/blog');
 const fs = require('fs');
 
@@ -12,7 +11,7 @@ exports.createBlog = (req, res, next) => {
 
 exports.getOneBlog = (req, res, next) => {
     Blog.findOne({ _id : req.params.id })
-        .then(thing => res.status(200).json(thing))
+        .then(blog => res.status(200).json(blog))
         .catch(error => res.status(400).json( {error} ));
 };
 
@@ -23,12 +22,12 @@ exports.modifyBlog = (req, res, next) => {
     } : { ...req.body };
   
     delete thingObject._userId;
-    Thing.findOne({_id: req.params.id})
+    Blog.findOne({_id: req.params.id})
         .then((thing) => {
             if (thing.userId != req.auth.userId) {
                 res.status(401).json({ message : 'Not authorized'});
             } else {
-                Thing.updateOne({ _id: req.params.id}, { ...thingObject, _id: req.params.id})
+                Blog.updateOne({ _id: req.params.id}, { ...thingObject, _id: req.params.id})
                 .then(() => res.status(200).json({message : 'Objet modifié!'}))
                 .catch(error => res.status(401).json({ error }));
             }
@@ -48,6 +47,23 @@ exports.deleteBlog = (req, res, next) => {
 };
 exports.getAllBlogs =(req, res, next) => {
     Blog.find()
-        .then(things => res.status(200).json(things))
+        .then(blogs => res.status(200).json(blogs))
         .catch(error => res.status(400).json({ error }));
 };
+
+exports.getGroupedBlogs = (req, res, next) => {
+    function groupByLocation(blogs) {
+        return blogs.reduce((acc, post) => {
+        if (!acc[post.location]) {
+            acc[post.location] = [];
+        }
+        acc[post.location].push(post);
+        return acc;
+        }, {})
+    }
+
+    Blog.find()
+        .then(blogs => res.status(200).json(groupByLocation(blogs)))
+        .catch(error => res.status(400).json({ error }));
+}
+

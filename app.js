@@ -17,13 +17,6 @@ mongoose.connect(process.env.DB_CONNECT)
 
 app.use(express.json());
 
-
-// This is the test version : I load a fake .json file of a bunch of blog posts. 
-/*const blogs = require('./fakeData/blogs.json');
-app.get('/', (req, res, next) => {
-    res.status(200).json(blogs);
-});*/
-
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,10 +26,11 @@ app.use((req, res, next) => {
 });
 
 
-const stuffRoutes = require('./routes/blog');
+const blogRoutes = require('./routes/blog');
+const locationRoutes = require('./routes/location')
 const userRoutes = require('./routes/user');
-app.use('/', stuffRoutes);
-app.use('/api/auth', userRoutes)
-
+app.use('/location', locationRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/', blogRoutes);
 
 module.exports = app;
